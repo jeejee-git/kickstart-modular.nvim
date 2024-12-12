@@ -23,13 +23,54 @@ vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' }
 -- vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
 
 -- Keybinds to make split navigation easier.
---  Use CTRL+<hjkl> to switch between windows
 --
 --  See `:help wincmd` for a list of all window commands
-vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
-vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
-vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
-vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+vim.keymap.set('n', '<A-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
+vim.keymap.set('n', '<A-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
+vim.keymap.set('n', '<A-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
+vim.keymap.set('n', '<A-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+
+--  Use ALT+<hjkl> to move windows around
+vim.keymap.set('n', '<A-H>', '<C-w>H', { desc = 'Move pane to left' })
+vim.keymap.set('n', '<A-L>', '<C-w>L', { desc = 'Move pane to right' })
+vim.keymap.set('n', '<A-J>', '<C-w>J', { desc = 'Move pane to down' })
+vim.keymap.set('n', '<A-K>', '<C-w>K', { desc = 'Move pane to up' })
+--
+--  Use ALT+CTRL+<hjkl> to resize windows
+vim.keymap.set('n', '<C-A-h>', ':vertical resize -2<CR>', { desc = 'Decrease pane width' })
+vim.keymap.set('n', '<C-A-l>', ':vertical resize +2<CR>', { desc = 'Increase pane width' })
+vim.keymap.set('n', '<C-A-j>', ':resize +2<CR>', { desc = 'Increase pane height' })
+vim.keymap.set('n', '<C-A-k>', ':resize -2<CR>', { desc = 'Decrease pane height' })
+
+-- Navigate buffers
+--
+-- Navigate buffers, but only if not in oil.nvim buffer
+vim.keymap.set('n', '<S-l>', function()
+  if vim.bo.filetype ~= 'oil' then
+    vim.cmd 'bnext'
+  end
+end, { desc = 'Go to next buffer' })
+--
+vim.keymap.set('n', '<S-h>', function()
+  if vim.bo.filetype ~= 'oil' then
+    vim.cmd 'bprevious'
+  end
+end, { desc = 'Go to previous buffer' })
+
+-- Write/Delete buffer
+vim.keymap.set('n', '<C-x>', ':close<CR>', { desc = 'Close current window' })
+vim.keymap.set('n', '<C-c>', ':bdelete<CR>', { desc = 'Delete current buffer' })
+
+-- Close nvim
+vim.keymap.set('n', '<C-q>', ':q<CR>', { desc = 'Close Neovim' })
+
+-- Stay in indent mode
+vim.keymap.set('v', '<', '<gv', { desc = 'Indent left' })
+vim.keymap.set('v', '>', '>gv', { desc = 'Indent right' })
+
+-- Move lines up and down
+vim.keymap.set('v', '<A-j>', ":m '>+1<CR>gv-gv", { desc = 'Move text up' })
+vim.keymap.set('v', '<A-k>', ":m '<-2<CR>gv-gv", { desc = 'Move text down' })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
@@ -43,6 +84,19 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   callback = function()
     vim.highlight.on_yank()
   end,
+})
+
+-- Stop auto-comment prefixing newlines
+vim.api.nvim_create_autocmd('BufEnter', {
+  callback = function()
+    vim.opt.formatoptions = vim.opt.formatoptions - { 'c', 'r', 'o' }
+  end,
+})
+
+-- Markdown syntax conceal
+vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWinEnter' }, {
+  pattern = { '*.md' },
+  command = 'set conceallevel=2',
 })
 
 -- vim: ts=2 sts=2 sw=2 et
