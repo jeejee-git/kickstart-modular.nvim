@@ -20,9 +20,6 @@ return {
     -- Installs the debug adapters for you
     'williamboman/mason.nvim',
     'jay-babu/mason-nvim-dap.nvim',
-
-    -- Add your own debuggers here
-    'leoluz/nvim-dap-go',
   },
   keys = {
     -- Basic debugging keymaps, feel free to change to your liking!
@@ -94,7 +91,7 @@ return {
       -- online, please don't ask me how to install them :)
       ensure_installed = {
         -- Update this to ensure that you have the debuggers for the langs you want
-        'delve',
+        'gdb', -- GDB for C/C++
       },
     }
 
@@ -132,17 +129,51 @@ return {
     --   vim.fn.sign_define(tp, { text = icon, texthl = hl, numhl = hl })
     -- end
 
+    -- GDB Adapter Configuration
+    dap.adapters.gdb = {
+      type = 'executable',
+      command = 'gdb', -- Path to your GDB executable
+      args = { '--interpreter=dap', '--eval-command', 'set print pretty on' },
+    }
+    dap.configurations.c = {
+      {
+        name = 'Launch',
+        type = 'gdb',
+        request = 'launch',
+        program = function()
+          return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+        end,
+        cwd = '${workspaceFolder}',
+        stopAtBeginningOfMainSubprogram = false,
+      },
+      {
+        name = 'Select and attach to process',
+        type = 'gdb',
+        request = 'attach',
+        program = function()
+          return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+        end,
+        pid = function()
+          local name = vim.fn.input 'Executable name (filter): '
+          return require('dap.utils').pick_process { filter = name }
+        end,
+        cwd = '${workspaceFolder}',
+      },
+      {
+        name = 'Attach to gdbserver :1234',
+        type = 'gdb',
+        request = 'attach',
+        target = 'localhost:1234',
+        program = function()
+          return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+        end,
+        cwd = '${workspaceFolder}',
+      },
+    }
+    dap.configurations.cpp = dap.configurations.c -- Use the same configuration for C
+
     dap.listeners.after.event_initialized['dapui_config'] = dapui.open
     dap.listeners.before.event_terminated['dapui_config'] = dapui.close
     dap.listeners.before.event_exited['dapui_config'] = dapui.close
-
-    -- Install golang specific config
-    require('dap-go').setup {
-      delve = {
-        -- On Windows delve must be run attached or it crashes.
-        -- See https://github.com/leoluz/nvim-dap-go/blob/main/README.md#configuring
-        detached = vim.fn.has 'win32' == 0,
-      },
-    }
   end,
 }
