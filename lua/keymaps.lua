@@ -93,8 +93,10 @@ vim.api.nvim_create_autocmd('BufEnter', {
   end,
 })
 
--- Markdown syntax conceal
-vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWinEnter' }, {
-  pattern = { '*.md' },
-  command = 'set conceallevel=2',
+-- Configure commenting for C/C++ filetype
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = { 'c', 'cpp' },
+  callback = function()
+    vim.bo.commentstring = '// %s'
+  end,
 })
