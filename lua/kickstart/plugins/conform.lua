@@ -32,7 +32,7 @@ return {
         lua = { 'stylua' },
         c = { 'clang-format' },
         cpp = { 'clang-format' },
-        markdown = { 'mdformat' },
+        asm = { 'asmfmt' },
       },
     },
   },

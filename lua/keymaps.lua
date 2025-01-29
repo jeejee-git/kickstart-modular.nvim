@@ -58,11 +58,8 @@ vim.keymap.set('n', '<S-h>', function()
 end, { desc = 'Go to previous buffer' })
 
 -- Write/Delete buffer
-vim.keymap.set('n', '<C-x>', ':close<CR>', { desc = 'Close current window' })
+vim.keymap.set('n', '<C-q>', ':close<CR>', { desc = 'Close current window' })
 vim.keymap.set('n', '<C-c>', ':bdelete<CR>', { desc = 'Delete current buffer' })
-
--- Close nvim
-vim.keymap.set('n', '<C-q>', ':q<CR>', { desc = 'Close Neovim' })
 
 -- Stay in indent mode
 vim.keymap.set('v', '<', '<gv', { desc = 'Indent left' })
@@ -86,7 +83,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
--- Stop auto-comment prefixing newlines
+-- Stop auto comment-prefixing newlines
 vim.api.nvim_create_autocmd('BufEnter', {
   callback = function()
     vim.opt.formatoptions = vim.opt.formatoptions - { 'c', 'r', 'o' }

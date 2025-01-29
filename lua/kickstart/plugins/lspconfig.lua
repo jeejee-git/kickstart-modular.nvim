@@ -245,9 +245,9 @@ return {
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
         'clang-format', -- Used to format C/C++ code
-        'cpplint', -- Static code analyzer for C/C++ code
-        'markdownlint', -- Static code analyzer for markdown files
-        'mdformat', -- Used to format markdown
+        -- 'cpplint', -- Static code analyzer for C/C++ code
+        -- 'markdownlint', -- Static code analyzer for markdown files
+        'asmfmt', -- Used to format assembly
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
