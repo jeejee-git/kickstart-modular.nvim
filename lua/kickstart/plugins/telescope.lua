@@ -76,7 +76,12 @@ return {
             i = { ['<CR>'] = select_one_or_multi },
           },
         },
-        -- pickers = {}
+        pickers = {
+          find_files = {
+            hidden = true,
+            follow = true,
+          },
+        },
         extensions = {
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
