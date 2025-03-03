@@ -90,10 +90,5 @@ vim.api.nvim_create_autocmd('BufEnter', {
   end,
 })
 
--- Configure commenting for C/C++ filetype
-vim.api.nvim_create_autocmd('FileType', {
-  pattern = { 'c', 'cpp' },
-  callback = function()
-    vim.bo.commentstring = '// %s'
-  end,
-})
+-- Remove 'q'+':' keybind that opens up command line window
+vim.api.nvim_set_keymap('n', 'q', ':', { noremap = true, silent = true })

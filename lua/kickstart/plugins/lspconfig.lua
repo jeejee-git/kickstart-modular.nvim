@@ -246,7 +246,6 @@ return {
         'stylua', -- Used to format Lua code
         'clang-format', -- Used to format C/C++ code
         'cpplint', -- Static code analyzer for C/C++ code
-        -- 'markdownlint', -- Static code analyzer for markdown files
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
