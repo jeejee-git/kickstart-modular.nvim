@@ -229,6 +229,28 @@ return {
             },
           },
         },
+
+        omnisharp_mono = {
+          cmd = {
+            vim.fn.expand '~/.local/share/nvim/mason/packages/omnisharp-mono/omnisharp-mono',
+            '--languageserver',
+            '--hostPID',
+            tostring(vim.fn.getpid()),
+          },
+          enable_roslyn_analyzers = true,
+          enable_import_completion = true,
+          organize_imports_on_format = true,
+          enable_decompilation_support = true,
+          use_global_mono = 'always', -- Ensure OmniSharp uses the global Mono installation
+          init_options = {
+            initializationTimeout = 30000, -- Increase timeout to 30 seconds
+          },
+          settings = {
+            MsBuild = {
+              LoadProjectsOnDemand = false,
+            },
+          },
+        },
       }
 
       -- Ensure the servers and tools above are installed
