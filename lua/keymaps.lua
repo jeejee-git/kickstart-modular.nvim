@@ -91,4 +91,4 @@ vim.api.nvim_create_autocmd('BufEnter', {
 })
 
 -- Remove 'q'+':' keybind that opens up command line window
-vim.api.nvim_set_keymap('n', 'q', ':', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('n', 'q', ':', { noremap = true, silent = true })
