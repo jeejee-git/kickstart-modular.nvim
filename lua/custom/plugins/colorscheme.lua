@@ -3,16 +3,14 @@
 --
 -- See the kickstart.nvim README for more information
 return {
-  'NLKNguyen/papercolor-theme',
+  'scottmckendry/cyberdream.nvim',
   lazy = false,
   priority = 1000,
   config = function()
-    vim.api.nvim_create_autocmd('VimEnter', {
-      callback = function()
-        vim.o.background = 'light'
-        vim.cmd 'colorscheme PaperColor'
-      end,
-      once = true,
-    })
+    require('cyberdream').setup {
+      transparent = true,
+      italic_comments = true,
+    }
+    vim.cmd 'colorscheme cyberdream-light'
   end,
 }
