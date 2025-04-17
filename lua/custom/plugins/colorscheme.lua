@@ -3,13 +3,16 @@
 --
 -- See the kickstart.nvim README for more information
 return {
-  'ellisonleao/gruvbox.nvim',
+  'NLKNguyen/papercolor-theme',
+  lazy = false,
   priority = 1000,
   config = function()
-    -- Default options:
-    require('gruvbox').setup {
-      transparent_mode = true,
-    }
-    vim.cmd 'colorscheme gruvbox'
+    vim.api.nvim_create_autocmd('VimEnter', {
+      callback = function()
+        vim.o.background = 'light'
+        vim.cmd 'colorscheme PaperColor'
+      end,
+      once = true,
+    })
   end,
 }

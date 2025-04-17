@@ -16,12 +16,6 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 -- or just use <C-\><C-n> to exit terminal mode
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
--- TIP: Disable arrow keys in normal mode
--- vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
--- vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
--- vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
--- vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
-
 -- Keybinds to make split navigation easier.
 --
 --  See `:help wincmd` for a list of all window commands
@@ -31,10 +25,10 @@ vim.keymap.set('n', '<A-j>', '<C-w><C-j>', { desc = 'Move focus to the lower win
 vim.keymap.set('n', '<A-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
 --  Use ALT+<hjkl> to move windows around
-vim.keymap.set('n', '<A-H>', '<C-w>H', { desc = 'Move pane to left' })
-vim.keymap.set('n', '<A-L>', '<C-w>L', { desc = 'Move pane to right' })
-vim.keymap.set('n', '<A-J>', '<C-w>J', { desc = 'Move pane to down' })
-vim.keymap.set('n', '<A-K>', '<C-w>K', { desc = 'Move pane to up' })
+vim.keymap.set('n', '<A-S-h>', '<C-w>H', { desc = 'Move pane to left' })
+vim.keymap.set('n', '<A-S-l>', '<C-w>L', { desc = 'Move pane to right' })
+vim.keymap.set('n', '<A-S-j>', '<C-w>J', { desc = 'Move pane to down' })
+vim.keymap.set('n', '<A-S-k>', '<C-w>K', { desc = 'Move pane to up' })
 --
 --  Use ALT+CTRL+<hjkl> to resize windows
 vim.keymap.set('n', '<C-A-h>', ':vertical resize -2<CR>', { desc = 'Decrease pane width' })
@@ -64,10 +58,6 @@ vim.keymap.set('n', '<C-c>', ':bdelete<CR>', { desc = 'Delete current buffer' })
 -- Stay in indent mode
 vim.keymap.set('v', '<', '<gv', { desc = 'Indent left' })
 vim.keymap.set('v', '>', '>gv', { desc = 'Indent right' })
-
--- Move lines up and down
-vim.keymap.set('v', '<A-j>', ":m '>+1<CR>gv-gv", { desc = 'Move text up' })
-vim.keymap.set('v', '<A-k>', ":m '<-2<CR>gv-gv", { desc = 'Move text down' })
 
 -- NOTE: Some terminals have colliding keymaps or are not able to send distinct keycodes
 -- vim.keymap.set("n", "<C-S-h>", "<C-w>H", { desc = "Move window to the left" })
