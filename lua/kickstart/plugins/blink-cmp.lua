@@ -31,6 +31,7 @@ return {
         opts = {},
       },
       'folke/lazydev.nvim',
+      'ribru17/blink-cmp-spell', -- Spelling source
     },
     --- @module 'blink.cmp'
     --- @type blink.cmp.Config
@@ -75,12 +76,6 @@ return {
         documentation = {
           auto_show = false,
           auto_show_delay_ms = 500,
-          window = {
-            border = 'single',
-          },
-        },
-        menu = {
-          border = 'rounded',
         },
         ghost_text = {
           enabled = true,
@@ -88,9 +83,30 @@ return {
       },
 
       sources = {
-        default = { 'lsp', 'path', 'snippets', 'lazydev' },
+        default = { 'lsp', 'path', 'snippets', 'lazydev', 'spell' },
         providers = {
           lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
+          spell = {
+            name = 'Spell',
+            module = 'blink-cmp-spell',
+            opts = {
+              -- EXAMPLE: Only enable source in `@spell` captures, and disable it
+              -- in `@nospell` captures.
+              enable_in_context = function()
+                local curpos = vim.api.nvim_win_get_cursor(0)
+                local captures = vim.treesitter.get_captures_at_pos(0, curpos[1] - 1, curpos[2] - 1)
+                local in_spell_capture = false
+                for _, cap in ipairs(captures) do
+                  if cap.capture == 'spell' then
+                    in_spell_capture = true
+                  elseif cap.capture == 'nospell' then
+                    return false
+                  end
+                end
+                return in_spell_capture
+              end,
+            },
+          },
         },
       },
 
@@ -103,15 +119,24 @@ return {
       -- the rust implementation via `'prefer_rust_with_warning'`
       --
       -- See :h blink-cmp-config-fuzzy for more information
-      fuzzy = { implementation = 'lua' },
-
-      -- Shows a signature help window while you type arguments for a function
-      signature = {
-        enabled = true,
-        window = {
-          border = 'rounded',
+      fuzzy = {
+        implementation = 'lua',
+        sorts = {
+          function(a, b)
+            local sort = require 'blink.cmp.fuzzy.sort'
+            if a.source_id == 'spell' and b.source_id == 'spell' then
+              return sort.label(a, b)
+            end
+          end,
+          -- This is the normal default order, which we fall back to
+          'score',
+          'kind',
+          'label',
         },
       },
+
+      -- Shows a signature help window while you type arguments for a function
+      signature = { enabled = true },
     },
   },
 }

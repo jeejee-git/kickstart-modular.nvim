@@ -51,9 +51,12 @@ vim.keymap.set('n', '<S-h>', function()
   end
 end, { desc = 'Go to previous buffer' })
 
--- Write/Delete buffer
-vim.keymap.set('n', '<C-q>', ':close<CR>', { desc = 'Close current window' })
-vim.keymap.set('n', '<C-c>', ':bdelete<CR>', { desc = 'Delete current buffer' })
+-- Window and buffer management:
+vim.keymap.set('n', '<leader>q', ':close<CR>', { desc = 'Close current window' })
+vim.keymap.set('n', '<leader>x', ':bdelete<CR>', { desc = 'Delete current buffer' })
+-- Force versions (no warning about unsaved changes)
+vim.keymap.set('n', '<leader>Q', ':close!<CR>', { desc = 'Force close window' })
+vim.keymap.set('n', '<leader>X', ':bdelete!<CR>', { desc = 'Force delete buffer' })
 
 -- Stay in indent mode
 vim.keymap.set('v', '<', '<gv', { desc = 'Indent left' })

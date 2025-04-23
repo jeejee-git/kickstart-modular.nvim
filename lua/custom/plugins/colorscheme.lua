@@ -3,14 +3,10 @@
 --
 -- See the kickstart.nvim README for more information
 return {
-  'scottmckendry/cyberdream.nvim',
-  lazy = false,
+  'ellisonleao/gruvbox.nvim',
   priority = 1000,
   config = function()
-    require('cyberdream').setup {
-      transparent = true,
-      italic_comments = true,
-    }
-    vim.cmd 'colorscheme cyberdream-light'
+    vim.o.background = 'dark' -- or "light" for light mode
+    vim.cmd [[colorscheme gruvbox]]
   end,
 }

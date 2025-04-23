@@ -21,11 +21,9 @@ return {
         'williamboman/mason.nvim',
         opts = {
           ui = {
-            border = 'rounded',
-            backdrop = 100,
+            border = 'single',
           },
         },
-        config = true,
       },
       'williamboman/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
@@ -38,7 +36,7 @@ return {
           notification = {
             window = {
               border = 'rounded',
-              winblend = 0,
+              winblend = 100,
             },
           },
         },
@@ -301,7 +299,6 @@ return {
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
         'clang-format', -- Used to format C/C++ code
-        'cpplint', -- Static code analyzer for C/C++ code
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 

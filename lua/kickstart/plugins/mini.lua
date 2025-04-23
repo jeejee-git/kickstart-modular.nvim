@@ -31,17 +31,6 @@ return {
       statusline.section_location = function()
         return '%2l:%-2v'
       end
-
-      -- Move any selection in any direction
-      --
-      -- Move left - <M-h>
-      -- Move right - <M-l>
-      -- Move down - <M-j>
-      -- Move up - <M-k>
-      require('mini.move').setup()
-
-      -- ... and there is more!
-      --  Check out: https://github.com/echasnovski/mini.nvim
     end,
   },
 }
