@@ -232,6 +232,7 @@ return {
         clangd = {
           cmd = { 'clangd', '--header-insertion=never' },
         },
+        bashls = {},
         -- gopls = {},
         -- pyright = {},
         -- rust_analyzer = {},
