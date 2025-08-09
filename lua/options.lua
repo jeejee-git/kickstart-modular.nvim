@@ -23,6 +23,18 @@ vim.schedule(function()
   vim.o.clipboard = 'unnamedplus'
 end)
 
+vim.schedule(function()
+  vim.api.nvim_create_autocmd('TextYankPost', {
+    callback = function()
+      vim.highlight.on_yank()
+      local copy_to_unnamedplus = require('vim.ui.clipboard.osc52').copy '+'
+      copy_to_unnamedplus(vim.v.event.regcontents)
+      local copy_to_unnamed = require('vim.ui.clipboard.osc52').copy '*'
+      copy_to_unnamed(vim.v.event.regcontents)
+    end,
+  })
+end)
+
 -- Enable break indent
 vim.o.breakindent = true
 
@@ -70,12 +82,5 @@ vim.o.scrolloff = 10
 -- instead raise a dialog asking if you wish to save the current file(s)
 -- See `:help 'confirm'`
 vim.o.confirm = true
-
--- Set indentation settings
-vim.opt.autoindent = true
-vim.opt.expandtab = true
-vim.opt.smartindent = false
-vim.opt.shiftwidth = 2
-vim.opt.tabstop = 2
 
 -- vim: ts=2 sts=2 sw=2 et
