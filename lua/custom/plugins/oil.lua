@@ -10,11 +10,7 @@ return {
       require('oil').setup {
         columns = { 'icon' },
         keymaps = {
-          ['<C-k>'] = false,
-          ['<C-j>'] = false,
-          ['<M-h>'] = 'actions.select_split',
-          ['<BS>'] = 'actions.parent',
-          ['<C-t>'] = 'actions.toggle_trash',
+          ['g?'] = { 'actions.show_help', mode = 'n' },
         },
         view_options = {
           show_hidden = true,
@@ -24,7 +20,7 @@ return {
       }
 
       -- Open parent directory in current window
-      vim.keymap.set('n', '\\', '<CMD>Oil<CR>', { desc = 'Open parent directory' })
+      vim.keymap.set('n', '-', '<CMD>Oil<CR>', { desc = 'Open parent directory' })
     end,
   },
 }

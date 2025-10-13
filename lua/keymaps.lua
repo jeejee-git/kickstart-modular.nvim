@@ -89,5 +89,7 @@ vim.api.nvim_create_autocmd('BufEnter', {
   end,
 })
 
--- Remove 'q'+':' keybind that opens up command line window
--- vim.api.nvim_set_keymap('n', 'q', ':', { noremap = true, silent = true })
+-- Load custom digraph definitions (subscript, superscript, Greek letters, etc.)
+-- Defined in ~/.config/nvim/lua/digraphs.lua
+-- Usage: <C-k>{key}{key} in insert mode (e.g. <C-k>1s → ₁, <C-k>*a → α)
+require 'digraphs'

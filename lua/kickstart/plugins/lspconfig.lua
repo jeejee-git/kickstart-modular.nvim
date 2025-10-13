@@ -229,8 +229,26 @@ return {
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
-        clangd = {},
+
+        cmake = {},
+        asm_lsp = {},
         bashls = {},
+        clangd = {
+          cmd = {
+            'clangd',
+            '--background-index', -- Index project in background for faster results
+            '--clang-tidy', -- Enable clang-tidy integration
+            '--completion-style=bundled', -- Compact completion UI
+            '--header-insertion=iwyu', -- Insert missing headers using "include-what-you-use" logic
+            '--pch-storage=memory', -- Faster: keep precompiled headers in memory
+          },
+          init_options = {
+            clangdFileStatus = true, -- Show file processing status in statusline
+            usePlaceholders = true, -- Placeholder args in function calls
+            completeUnimported = true, -- Suggest symbols from non-included headers
+            semanticHighlighting = true, -- Enable semantic token highlighting
+          },
+        },
         -- gopls = {},
         -- pyright = {},
         -- rust_analyzer = {},
